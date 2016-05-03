@@ -1,0 +1,29 @@
+{
+  "name": "nodejs-quickstart",
+  "version": "1.0.0",
+  "description": "Node.js Quickstart/Demo app",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dalimil/NodeJS-Quickstart.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Quickstart"
+  ],
+  "author": "Dalimil Hajek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dalimil/NodeJS-Quickstart/issues"
+  },
+  "homepage": "https://github.com/Dalimil/NodeJS-Quickstart#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "multer": "^1.1.0"
+  }
+}

@@ -1,21 +1,16 @@
-var http = require("http");
 
-var port = 8080;
+var express = require('express');
+var app = express();
 
-http.createServer(function (request, response) {
-	// Parse the request url
-	var pathname = request.url;
-	console.log("Request for " + pathname + " received.");
+app.get('/', function (req, res) {
+   res.send('<h1>Hello</h1> World');
+})
 
-	// Send the HTTP header 
-	// HTTP Status: 200 : OK
-	// Content Type: text/plain
-	response.writeHead(200, {'Content-Type': 'text/plain'});
+var server = app.listen(8080, function () {
 
-	// Send the response body as "Hello World"
-	response.end('<h1>Hello<h1> World\n');
+  var host = server.address().address
+  var port = server.address().port
 
-}).listen(port);
+  console.log("Server running at http://%s:%s", host, port)
 
-// Console will print the message
-console.log('Server running at http://127.0.0.1:' + port);
+})
