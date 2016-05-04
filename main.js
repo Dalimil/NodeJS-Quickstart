@@ -15,18 +15,21 @@ app.use(cookieParser());
 app.use('/static', express.static('public')); // first arg can be omitted
 
 app.get('/', function(req, res) {
+	res.cookie('cart', { items: [1,2,3] }); // set cookie - any json or string
+	// res.clearCookie('cart');
+	// res.json({ user: 'john' }); // Send json response
 	res.sendFile( __dirname + "/" + "index.html" );
 });
 
 app.get('/user/:name', function(req, res) {
    console.log("Got a GET request with a pattern match");
    console.log(getRequestInfo(req));
-   res.send('Hello GET');
+   res.send('Hello <strong>GET</strong>');
 });
 
 app.post('/file_upload', function(req, res) {
    console.log("Got a POST request for the homepage");
-   res.send('Hello POST');
+   res.redirect('index');
 });
 
 
