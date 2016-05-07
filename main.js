@@ -14,6 +14,18 @@ app.use(cookieParser());
 // Expose urls like /static/images/logo.png 
 app.use('/static', express.static('public')); // first arg can be omitted
 
+var requestInfo = function(req, res, next) {
+	// The following vars will be accessible everywhere via the request object
+	req.requestInfo = getRequestInfo(req);
+	req.requestDate = Date.now();
+	req.requestTime = (new Date()).toLocaleTimeString();
+	console.log(req.requestTime + " - " + req.method +" " + req.url);
+	next();
+};
+// Middleware function that executes before every request (can have several of these)
+app.use(requestInfo); // Order/Place of call important!
+// app.use('/articles', requestInfo); // Works but messes up request URLs - /articles/id -> /id
+
 app.get('/', function(req, res) {
 	res.cookie('cart', { items: [1,2,3] }); // set cookie - any json or string
 	// res.clearCookie('cart');
@@ -24,7 +36,7 @@ app.get('/', function(req, res) {
 var articles = require('./articles');
 app.get('/articles', articles.list);
 
-app.get('/user/:name', function(req, res) {
+app.get('/user/:name', function(req, res) { /* Path can also be a regexp */
    console.log("Got a GET request with a pattern match");
    console.log(getRequestInfo(req));
    res.send('Hello <strong>GET</strong>');
@@ -38,13 +50,12 @@ app.post('/file_upload', function(req, res) {
 /* Specify both GET and POST endpoint */
 app.route('/debug') 
 	.get(function(req, res) {
-		var info = getRequestInfo(req);
+		var info = req.requestInfo;
 		res.end(JSON.stringify(info, null, 2)); // specify stringify() whitespace
 	})
 	.post(function(req, res) {
-		var info = getRequestInfo(req);
 		// Or with status: res.status(500).json({ error: 'message' });
-		res.json(info);
+		res.json(req.requestInfo);
 	});
 
 function getRequestInfo(req) {
@@ -70,5 +81,5 @@ var server = app.listen(8080, function() {
 	var port = server.address().port;
 
 	console.log("Server dir: " + __dirname);
-	console.log("Server running at http://localhost:" + port);
+	console.log((new Date()).toLocaleTimeString() + " - Server running at http://localhost:" + port);
 });
