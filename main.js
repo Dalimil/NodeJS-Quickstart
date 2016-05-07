@@ -21,6 +21,9 @@ app.get('/', function(req, res) {
 	res.sendFile( __dirname + "/" + "index.html" );
 });
 
+var articles = require('./articles');
+app.get('/articles', articles.list);
+
 app.get('/user/:name', function(req, res) {
    console.log("Got a GET request with a pattern match");
    console.log(getRequestInfo(req));
@@ -32,15 +35,17 @@ app.post('/file_upload', function(req, res) {
    res.redirect('index');
 });
 
-
-app.get('/debug', function(req, res) {
-	var info = getRequestInfo(req);
-	res.end(JSON.stringify(info, null, 2)); // specify stringify() whitespace
-});
-app.post('/debug', function(req, res) {
-	var info = getRequestInfo(req);
-	res.end(JSON.stringify(info, null, 2));
-});
+/* Specify both GET and POST endpoint */
+app.route('/debug') 
+	.get(function(req, res) {
+		var info = getRequestInfo(req);
+		res.end(JSON.stringify(info, null, 2)); // specify stringify() whitespace
+	})
+	.post(function(req, res) {
+		var info = getRequestInfo(req);
+		// Or with status: res.status(500).json({ error: 'message' });
+		res.json(info);
+	});
 
 function getRequestInfo(req) {
 	var info = {
