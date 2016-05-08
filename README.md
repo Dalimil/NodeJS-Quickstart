@@ -1,7 +1,14 @@
 # NodeJS-Quickstart
 Basic Node.js web application
 
-*The project has only just been started and I intend to start learning Node.js and work on this project after my exam period is over.*
+## Installation
+
+Install dependencies ( + make sure MongoDB is running at localhost:27017)
+
+```
+npm install
+```
+
 
 ## TODO
 
@@ -11,7 +18,6 @@ Basic Node.js web application
 - [ ] Cover topic mentioned here: https://github.com/Dalimil/Scala-Play-Quickstart/tree/master/app
 - [ ] Auth - https://github.com/expressjs/basic-auth-connect
 - [ ] WebSockets demo
-- [ ] Database demo
 - [ ] Scheduler
 - [ ] Server-side http request
 

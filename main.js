@@ -3,6 +3,7 @@ var express = require('express');
 var cookieParser = require('cookie-parser'); // cookies --- https://github.com/expressjs/cookie-parser
 var bodyParser = require('body-parser'); // additional body parsing --- https://github.com/expressjs/body-parser
 var multer  = require('multer'); // file upload (multipart/form-data) --- https://github.com/expressjs/multer
+var database = require('./database');
 var app = express();
 
 // Add top-level (could be made route-specific) parsers that will populate request.body
@@ -33,8 +34,7 @@ app.get('/', function(req, res) {
 	res.sendFile( __dirname + "/" + "index.html" );
 });
 
-var articles = require('./articles');
-app.get('/articles', articles.list);
+app.get('/articles', database.list);
 
 app.get('/user/:name', function(req, res) { /* Path can also be a regexp */
    console.log("Got a GET request with a pattern match");
