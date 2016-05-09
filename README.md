@@ -13,8 +13,6 @@ npm install
 ## TODO
 
 - [ ] File Upload with multer
-- [ ] Session - https://github.com/expressjs/session
-- [ ] Cookie Session? - https://github.com/expressjs/cookie-session
 - [ ] Cover topic mentioned here: https://github.com/Dalimil/Scala-Play-Quickstart/tree/master/app
 - [ ] Auth - https://github.com/expressjs/basic-auth-connect
 - [ ] WebSockets demo

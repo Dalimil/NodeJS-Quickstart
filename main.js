@@ -1,6 +1,5 @@
-
 var express = require('express');
-var cookieParser = require('cookie-parser'); // cookies --- https://github.com/expressjs/cookie-parser
+var cookieSession = require('cookie-session'); // cookies --- https://github.com/expressjs/cookie-session
 var bodyParser = require('body-parser'); // additional body parsing --- https://github.com/expressjs/body-parser
 var multer  = require('multer'); // file upload (multipart/form-data) --- https://github.com/expressjs/multer
 var database = require('./database');
@@ -10,7 +9,8 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false })); // application/x-www-form-urlencoded
 app.use(bodyParser.json()); // application/json
 
-app.use(cookieParser());
+// Set up secure cookie session
+app.use(cookieSession({ secret: 'vxZpt1uRYg6fdGsSotnksYRVnh5' }));
 
 // Expose urls like /static/images/logo.png 
 app.use('/static', express.static('public')); // first arg can be omitted
@@ -28,8 +28,8 @@ app.use(requestInfo); // Order/Place of call important!
 // app.use('/articles', requestInfo); // Works but messes up request URLs - /articles/id -> /id
 
 app.get('/', function(req, res) {
-	res.cookie('cart', { items: [1,2,3] }); // set cookie - any json or string
-	// res.clearCookie('cart');
+	req.session.shop = { items: [1,2,3] }; // set cookie - any json or string
+	// delete req.session.shop;
 	// res.json({ user: 'john' }); // Send json response
 	res.sendFile( __dirname + "/" + "index.html" );
 });
@@ -65,8 +65,7 @@ function getRequestInfo(req) {
 		url: req.url,		// /user/alice?search=love
 		params: req.params,	// { name: 'alice' } <- for route /user/:name
 		query: req.query,	// { search: 'love' }
-		cookies: req.cookies, // {}
-		signedCookies: req.signedCookies, // {}
+		session: req.session, // { myKey1: 'anyJsonObject', ... }
 		body: req.body,		// {} <- key-values for form POST or JSON
 		headers: req.headers, // { host: 'localhost:8080', ... }
 		ip: req.ip,	
