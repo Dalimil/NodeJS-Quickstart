@@ -13,10 +13,10 @@ npm install
 ## TODO
 
 - [ ] File Upload with multer
-- [ ] Cover topic mentioned here: https://github.com/Dalimil/Scala-Play-Quickstart/tree/master/app
-- [ ] Auth - https://github.com/expressjs/basic-auth-connect
+- [ ] Auth - https://github.com/expressjs/basic-auth-connect OR 'Passport' OR 'Grant' ?
 - [ ] WebSockets demo
 - [ ] Scheduler
-- [ ] Server-side http request
+- [ ] Server-side http request - module 'request' ?
+- [ ] FontAwesome
 
  

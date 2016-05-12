@@ -1,0 +1,16 @@
+extends layout
+
+block content
+	title= title
+	h1= message
+	img(src='static/img/nodejs.png', width='20%')
+	hr
+	h3.
+		File upload
+	// Can also use regular html
+	<form action="file_upload" method="POST" enctype="multipart/form-data">
+		<input type="file" name="file" /><br />
+		<input type="text" name="name" size="50" /><br />
+		<input type="submit" value="Upload File" />
+	</form>
+	
