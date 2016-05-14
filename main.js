@@ -40,7 +40,10 @@ app.get('/', function(req, res) {
 	// delete req.session.shop;
 	// res.json({ user: 'john' }); // Send json response
 	// res.sendFile( __dirname + "/" + "index.html" );
-	res.render('index', { title: 'Hey', message: 'Hello there!'}); // render .pug template
+	// Now render .pug template with any JSON locals/variables:
+	res.render('index', 
+		{ title: 'Demo', data: { name: "Shop", items: [3, 5, 8], open: true } } 
+	); 
 });
 
 app.get('/articles', dbController.list);
@@ -72,8 +75,8 @@ function getRequestInfo(req) {
 		method: req.method, // GET
 		path: req.path,		// /user/alice
 		url: req.url,		// /user/alice?search=love
-		params: req.params,	// { name: 'alice' } <- for route /user/:name
 		query: req.query,	// { search: 'love' }
+		params: req.params,	// { name: 'alice' } <- for route /user/:name
 		session: req.session, // { myKey1: 'anyJsonObject', ... }
 		body: req.body,		// {} <- key-values for form POST or JSON
 		headers: req.headers, // { host: 'localhost:8080', ... }

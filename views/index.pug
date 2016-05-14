@@ -2,15 +2,30 @@ extends layout
 
 block content
 	title= title
-	h1= message
+	p.
+		Putting plain text inside a tag... 
+		Just use the dot syntax
 	img(src='static/img/nodejs.png', width='20%')
 	hr
-	h3.
-		File upload
-	// Can also use regular html
-	<form action="file_upload" method="POST" enctype="multipart/form-data">
-		<input type="file" name="file" /><br />
-		<input type="text" name="name" size="50" /><br />
-		<input type="submit" value="Upload File" />
-	</form>
+	h3 File upload
+	- var formData = { buttonName: 'Upload file' } /* '-' to use JavaScript */
+	if formData
+		// Can also use regular html
+		<form action="file_upload" method="POST" enctype="multipart/form-data">
+			<input type="text" name="name" size="50" /><br />
+			input(type="file" name="file")
+			button#myButton.btn.btn-primary(style='width: '+(100/6)+'%') #{formData.buttonName}
+		</form>
+	else
+		p Something is wrong
+		ul
+		- for (var i=1; i<= 5; i++) {
+			li= i + ". Hello"
+		- }
+		br
+		- var languages = ['php', 'node', 'ruby']
+		div 
+			// or 'for value in languages'
+			each value, index in languages 
+				p= index + ". " + value
 	
