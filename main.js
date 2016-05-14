@@ -1,7 +1,7 @@
 var express = require('express');
 var cookieSession = require('cookie-session'); // cookies --- https://github.com/expressjs/cookie-session
 var bodyParser = require('body-parser'); // additional body parsing --- https://github.com/expressjs/body-parser
-var multer  = require('multer'); // file upload (multipart/form-data) --- https://github.com/expressjs/multer 
+var multer = require('multer'); // file upload (multipart/form-data) --- https://github.com/expressjs/multer 
 var path = require('path'); // path.join
 var pp = function(s){ return path.join(__dirname, s); };
 var app = express();
@@ -16,6 +16,7 @@ app.set('view engine', 'pug'); // Express loads the module internally
 // Add top-level (could be made route-specific) parsers that will populate request.body
 app.use(bodyParser.urlencoded({ extended: false })); // application/x-www-form-urlencoded
 app.use(bodyParser.json()); // application/json
+var upload = multer({ dest: pp('uploads/') }); // multipart/form-data
 
 // Set up secure cookie session
 app.use(cookieSession({ secret: 'vxZpt1uRYg6fdGsSotnksYRVnh5' }));
@@ -54,9 +55,11 @@ app.get('/user/:name', function(req, res) { /* Path can also be a regexp */
    res.send('Hello <strong>GET</strong>');
 });
 
-app.post('/file_upload', function(req, res) {
-   console.log("Got a POST request for the homepage");
-   res.redirect('index');
+app.post('/file_upload', upload.single('avatar'), function(req, res) {
+	console.log(req.file); // uploaded file info
+	console.log(req.file.path + " " + req.file.filename); // where it's stored
+	console.log(req.body); // text form-fields
+	res.redirect('/');
 });
 
 /* Specify both GET and POST endpoint */
