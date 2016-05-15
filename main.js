@@ -8,6 +8,11 @@ var app = express();
 
 /** Route handlers */
 var dbController = require('./controllers/database');
+/** Other modules */
+var scheduler = require('./utils/scheduler');
+// use scheduleOnce() or schedule() for one-off or repeated tasks respectively
+var scheduledAlert = scheduler.schedule(3000, function() { console.log("scheduled call"); });
+scheduledAlert.cancel();
 
 // Pug template engine - previously Jade - http://jade-lang.com/
 app.set('views', pp('views')); // where templates are located
