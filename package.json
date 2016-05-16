@@ -26,6 +26,7 @@
     "express": "^4.13.4",
     "mongodb": "^2.1.18",
     "multer": "^1.1.0",
-    "pug": "^2.0.0-alpha7"
+    "pug": "^2.0.0-alpha7",
+    "request": "^2.72.0"
   }
 }
