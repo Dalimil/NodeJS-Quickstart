@@ -14,6 +14,5 @@ npm install
 
 - [ ] Auth - https://github.com/expressjs/basic-auth-connect OR 'Passport' OR 'Grant' ?
 - [ ] WebSockets demo
-- [ ] FontAwesome
 
  
