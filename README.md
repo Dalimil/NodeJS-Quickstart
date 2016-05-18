@@ -12,7 +12,7 @@ npm install
 
 ## TODO
 
-- [ ] Auth - https://github.com/expressjs/basic-auth-connect OR 'Passport' OR 'Grant' ?
+- [ ] OAuth - 'Passport' OR 'Grant' ?
 - [ ] WebSockets demo
 
  
