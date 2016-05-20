@@ -13,6 +13,5 @@ npm install
 ## TODO
 
 - [ ] OAuth - 'Passport' OR 'Grant' ?
-- [ ] WebSockets demo
 
  

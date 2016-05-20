@@ -1,0 +1,26 @@
+extends layout
+
+block scripts
+	script(src="/socket.io/socket.io.js")
+
+block content
+	h3 Hello Web Sockets
+	button(onclick="notify_clicked();") Send message to the server
+
+	script.
+		var socket = io(); // init connection
+
+		/* SEND Message */
+		function notify_clicked() { 
+			socket.emit('user_clicked_button', {data: 'I clicked the big button'});
+		}
+
+		/* RECEIVE Message */
+		socket.on('big_news', function(data) {
+			console.log(data);
+		});
+
+		socket.on('all_ok', function(data) {
+			console.log(data);
+		});
+

@@ -5,9 +5,13 @@ var multer = require('multer'); // file upload (multipart/form-data) --- https:/
 var path = require('path'); // path.join
 var pp = function(s){ return path.join(__dirname, s); };
 var app = express();
+var server = require('http').createServer(app); // or https
 
 /** Route handlers */
 var dbController = require('./controllers/database');
+var sockets = require('./controllers/sockets');
+sockets.io.attach(server); // attach() is Socket.IO specific
+
 /** Other modules */
 var scheduler = require('./utils/scheduler');
 // use scheduleOnce() or schedule() for one-off or repeated tasks respectively
@@ -52,6 +56,11 @@ app.get('/', function(req, res) {
 	); 
 });
 
+/** Socket.IO demo index page */
+app.get('/sockets', function(req, res) {
+	res.render('sockets'); 
+});
+
 app.get('/articles', dbController.list);
 
 app.get('/user/:name', function(req, res) { /* Path can also be a regexp */
@@ -94,7 +103,8 @@ function getRequestInfo(req) {
 	return info;
 }
 
-var server = app.listen(8080, function() {
+
+server.listen(8080, function() {
 
 	var host = server.address().address;
 	var port = server.address().port;

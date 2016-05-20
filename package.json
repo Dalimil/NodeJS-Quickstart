@@ -6,20 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Dalimil/NodeJS-Quickstart.git"
-  },
-  "keywords": [
-    "Node.js",
-    "Quickstart"
-  ],
   "author": "Dalimil Hajek",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Dalimil/NodeJS-Quickstart/issues"
-  },
-  "homepage": "https://github.com/Dalimil/NodeJS-Quickstart#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
     "cookie-session": "^2.0.0-alpha.1",
@@ -27,6 +15,7 @@
     "mongodb": "^2.1.18",
     "multer": "^1.1.0",
     "pug": "^2.0.0-alpha7",
-    "request": "^2.72.0"
+    "request": "^2.72.0",
+    "socket.io": "^1.4.6"
   }
 }
