@@ -12,6 +12,8 @@ npm install
 
 ## TODO
 
-- [ ] OAuth - 'Passport' OR 'Grant' ?
+- [ ] Twitter authentication (https://github.com/jaredhanson/passport-twitter)
+- [ ] Mongoose
+- [ ] Morgan logger - https://github.com/expressjs/morgan
 
  
