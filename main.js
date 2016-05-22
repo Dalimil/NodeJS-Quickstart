@@ -2,7 +2,6 @@ var express = require('express');
 var cookieSession = require('cookie-session'); // cookies --- https://github.com/expressjs/cookie-session
 var bodyParser = require('body-parser'); // additional body parsing --- https://github.com/expressjs/body-parser
 var multer = require('multer'); // file upload (multipart/form-data) --- https://github.com/expressjs/multer 
-var passport = require('passport'); // authentication
 var path = require('path'); // path.join
 var pp = function(s){ return path.join(__dirname, s); };
 var app = express();
@@ -13,6 +12,7 @@ var dbController = require('./controllers/database');
 var sockets = require('./controllers/sockets');
 sockets.io.attach(server); // attach() is Socket.IO specific
 var auth = require('./controllers/authentication');
+auth.init(app); // Set up passport module
 
 /** Other modules */
 var config = require('./config');
@@ -32,10 +32,6 @@ var upload = multer({ dest: pp('uploads/') }); // multipart/form-data
 
 // Set up secure cookie session
 app.use(cookieSession({ secret: config.APP_SECRET }));
-
-// Set up passport module
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Expose urls like /static/images/logo.png 
 app.use('/static', express.static(pp('public'))); // first arg could be omitted
@@ -70,13 +66,12 @@ app.get('/sockets', function(req, res) {
 
 app.get('/articles', dbController.list);
 
-app.get('/login/facebook', passport.authenticate('facebook'));
-app.get('/login/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), 
-	function(req, res) { 
-		// Successful authentication, redirect home
-		res.redirect('/');
-	}
-);
+/** Facebook authentication - it's the same for Twitter */
+app.get('/login/facebook', auth.loginFacebook);
+app.get('/login/facebook/callback', auth.loginFacebookReturn, function(req, res) { 
+	// Successful authentication, redirect home
+	res.redirect('/');
+});
 
 app.get('/user/:name', function(req, res) { /* Path can also be a regexp */
    console.log("Got a GET request with a pattern match");

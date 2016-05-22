@@ -1,31 +1,52 @@
 var passport = require('passport');
 var FacebookStrategy = require('passport-facebook').Strategy;
+var TwitterStrategy  = require('passport-twitter').Strategy;
 var config = require('../config');
+
+exports.init = function(app) {
+	app.use(passport.initialize());
+	app.use(passport.session());
+};
+
+exports.loginFacebook = passport.authenticate('facebook'); // value = middleware function
+exports.loginFacebookReturn = passport.authenticate('facebook', { failureRedirect: '/login' });
 
 // Configure the Facebook strategy for use by Passport.
 //
 // OAuth 2.0-based strategies require a `verify` function which receives the
 // credential (`accessToken`) for accessing the Facebook API on the user's
-// behalf, along with the user's profile.  The function must invoke `cb`
-// with a user object, which will be set at `req.user` in route handlers after
-// authentication.
+// behalf, along with the user's profile.  The function must invoke `cb` with
+// a user object, which will be set at `req.user` in route handlers after authentication.
 passport.use(new FacebookStrategy({
-    clientID: config.FACEBOOK_APP_ID,
-    clientSecret: config.FACEBOOK_APP_SECRET,
-    callbackURL: "/auth/facebook/callback",
-    profileFields: ['name', 'email', 'link', 'locale', 'timezone']
-  },
-  function(accessToken, refreshToken, profile, cb) {
-  	// In this example, the user's Facebook profile is supplied as the user
-    // record.  In a production-quality application, the Facebook profile should
-    // be associated with a user record in the application's database, which
-    // allows for account linking and authentication with other identity
-    // providers.
-  	return cb(null, profile);
-    /*User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-      return cb(err, user);
-    });*/
-  }
+		clientID: config.FACEBOOK_AUTH.ID,
+		clientSecret: config.FACEBOOK_AUTH.SECRET,
+		callbackURL: "/auth/facebook/callback",
+		profileFields: ['name', 'email', 'link', 'locale', 'timezone']
+	},
+	function(accessToken, refreshToken, profile, cb) {
+		// In this example, the user's Facebook profile is supplied as the user
+		// record.  In a production-quality application, the Facebook profile should
+		// be associated with a user record in the application's database, which
+		// allows for account linking and authentication with other identity
+		// providers.
+		return cb(null, profile);
+		/*User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+			return cb(err, user);
+		});*/
+	}
+));
+
+// Twitter is OAuth 1.0
+passport.use(new TwitterStrategy({
+		consumerKey: config.TWITTER_AUTH.KEY,
+		consumerSecret: config.TWITTER_AUTH.SECRET,
+		callbackURL: "/auth/twitter/callback"
+	},
+	function(token, tokenSecret, profile, cb) {
+		User.findOrCreate({ twitterId: profile.id }, function (err, user) {
+			return cb(err, user);
+		});
+	}
 ));
 
 // Configure Passport authenticated session persistence.
@@ -38,11 +59,12 @@ passport.use(new FacebookStrategy({
 // example does not have a database, the complete Twitter profile is serialized
 // and deserialized.
 passport.serializeUser(function(user, cb) {
-  cb(null, user);
+	cb(null, user);
+	// OR cb(null, user.id)
 });
 
 passport.deserializeUser(function(obj, cb) {
-  cb(null, obj);
-  // Or User.findById(obj, (err, user) => { cb(err, user); });
+	cb(null, obj);
+	// OR User.findById(id, function(err, user) { cb(err, user); });
 });
 
