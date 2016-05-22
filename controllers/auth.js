@@ -36,7 +36,13 @@ passport.use(new FacebookStrategy({
 	}
 ));
 
-// Twitter is OAuth 1.0
+// Configure the Twitter strategy for use by Passport.
+//
+// OAuth 1.0-based strategies require a `verify` function which receives the
+// credentials (`token` and `tokenSecret`) for accessing the Twitter API on the
+// user's behalf, along with the user's profile.  The function must invoke `cb`
+// with a user object, which will be set at `req.user` in route handlers after
+// authentication.
 passport.use(new TwitterStrategy({
 		consumerKey: config.TWITTER_AUTH.KEY,
 		consumerSecret: config.TWITTER_AUTH.SECRET,
@@ -67,4 +73,15 @@ passport.deserializeUser(function(obj, cb) {
 	cb(null, obj);
 	// OR User.findById(id, function(err, user) { cb(err, user); });
 });
+
+
+/**
+ * Login Required middleware.
+ */
+exports.isAuthenticated = function(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/login');
+};
 

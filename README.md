@@ -12,10 +12,8 @@ npm install
 
 ## TODO
 
-- [ ] Replace cookie-session by express-session
-- [ ] Twitter authentication (https://github.com/jaredhanson/passport-twitter)
-- [ ] Mongoose
+- [ ] Mongoose (remove mongodb) + User model + query examples
 - [ ] Morgan logger - https://github.com/expressjs/morgan
-- [ ] Replace run.sh by a script in package.json
+- [ ] Sending email - nodemailer? - 
 
  

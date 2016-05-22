@@ -1,25 +1,14 @@
-var express = require('express');
-var cookieSession = require('cookie-session'); // cookies --- https://github.com/expressjs/cookie-session
-var bodyParser = require('body-parser'); // additional body parsing --- https://github.com/expressjs/body-parser
-var multer = require('multer'); // file upload (multipart/form-data) --- https://github.com/expressjs/multer 
-var path = require('path'); // path.join
-var pp = function(s){ return path.join(__dirname, s); };
-var app = express();
-var server = require('http').createServer(app); // or https
-
-/** Route handlers */
-var dbController = require('./controllers/database');
-var sockets = require('./controllers/sockets');
-sockets.io.attach(server); // attach() is Socket.IO specific
-var auth = require('./controllers/authentication');
-auth.init(app); // Set up passport module
-
-/** Other modules */
-var config = require('./config');
-var scheduler = require('./utils/scheduler');
-// use scheduleOnce() or schedule() for one-off or repeated tasks respectively
-var scheduledAlert = scheduler.schedule(3000, function() { console.log("scheduled call"); });
-scheduledAlert.cancel();
+const express = require('express');
+const bodyParser = require('body-parser'); // additional body parsing --- https://github.com/expressjs/body-parser
+const multer = require('multer'); // file upload (multipart/form-data) --- https://github.com/expressjs/multer 
+const session = require('express-session'); // session cookies --- https://github.com/expressjs/session
+const MongoStore = require('connect-mongo')(session); // Session data storage (server-side MongoDB)
+const mongoose = require('mongoose'); // ORM for MongoDB
+const path = require('path'); // path.join
+const pp = function(s){ return path.join(__dirname, s); };
+const app = express();
+const server = require('http').createServer(app); // or https
+const config = require('./config');
 
 // Pug template engine - previously Jade - http://jade-lang.com/
 app.set('views', pp('views')); // where templates are located
@@ -28,10 +17,31 @@ app.set('view engine', 'pug'); // Express loads the module internally
 // Add top-level (could be made route-specific) parsers that will populate request.body
 app.use(bodyParser.urlencoded({ extended: false })); // application/x-www-form-urlencoded
 app.use(bodyParser.json()); // application/json
-var upload = multer({ dest: pp('uploads/') }); // multipart/form-data
+const upload = multer({ dest: pp('uploads/') }); // Use with multipart/form-data
+
+// Connect to MongoDB
+mongoose.connect(config.MONGODB_URI);
 
 // Set up secure cookie session
-app.use(cookieSession({ secret: config.APP_SECRET }));
+app.use(session({
+	secret: config.APP_SECRET,
+	saveUninitialized: false,
+	resave: false, // keep the most recent session modification
+	store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+
+/** Set up periodic tasks */
+const scheduler = require('./utils/scheduler');
+// use scheduleOnce() or schedule() for one-off or repeated tasks respectively
+var scheduledAlert = scheduler.schedule(3000, function() { console.log("scheduled call"); });
+scheduledAlert.cancel();
+
+/** Route handlers */
+const dbController = require('./controllers/database');
+const sockets = require('./controllers/sockets');
+sockets.io.attach(server); // attach() is Socket.IO specific
+const auth = require('./controllers/auth');
+auth.init(app); // Set up passport module
 
 // Expose urls like /static/images/logo.png 
 app.use('/static', express.static(pp('public'))); // first arg could be omitted
@@ -50,12 +60,13 @@ app.use(requestInfo); // Order/Place of call important!
 
 app.get('/', function(req, res) {
 	req.session.shop = { items: [1,2,3] }; // set cookie - any json or string
+	req.session.views += 1;
 	// delete req.session.shop;
 	// res.json({ user: 'john' }); // Send json response
 	// res.sendFile( __dirname + "/" + "index.html" );
 	// Now render .pug template with any JSON locals/variables:
 	res.render('index', 
-		{ title: 'Demo', data: { name: "Shop", items: [3, 5, 8], open: true } } 
+		{ title: 'Demo', data: { name: "Shop", items: [3, 5, 8] } } 
 	); 
 });
 
@@ -105,6 +116,7 @@ function getRequestInfo(req) {
 		query: req.query,	// { search: 'love' }
 		params: req.params,	// { name: 'alice' } <- for route /user/:name
 		session: req.session, // { myKey1: 'anyJsonObject', ... }
+		auth: req.user, 	// passport authentication object
 		body: req.body,		// {} <- key-values for form POST or JSON
 		headers: req.headers, // { host: 'localhost:8080', ... }
 		ip: req.ip,	
@@ -115,10 +127,9 @@ function getRequestInfo(req) {
 
 
 server.listen(config.PORT, function() {
-
 	var host = server.address().address;
 	var port = server.address().port;
-
+	// console.log(app.get('env'));
 	console.log("Server dir: " + pp('/'));
 	console.log((new Date()).toLocaleTimeString() + " - Server running at http://localhost:" + port);
 });
