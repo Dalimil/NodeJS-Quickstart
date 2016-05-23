@@ -13,7 +13,6 @@ npm install
 ## TODO
 
 - [ ] Mongoose (remove mongodb) + User model + query examples
-- [ ] Morgan logger - https://github.com/expressjs/morgan
 - [ ] Sending email - nodemailer? - 
 
  
