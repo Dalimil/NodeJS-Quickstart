@@ -1,71 +1,128 @@
-//var MongoClient = require('mongodb').MongoClient;
-//var url = config.MONGODB_URI;
+// if our user.js file is at app/models/user.js
+var User = require('./app/models/User');
+  
+// create a new user called chris
+var chris = new User({
+  name: 'Chris Quill',
+  username: 'chris',
+  password: 'password' 
+});
 
-function query(method, callback) {
-	MongoClient.connect(url, function(err, db) {
-		if(err) console.log('Unable to connect to the mongoDB server. Error:', err);
-	    console.log('Connection established to', url);
-	    console.log(method);
+// call the custom method. this will just add -dude to his name
+// user will now be Chris-dude
+chris.dudify(function(err, name) {
+  if (err) throw err;
 
-	    method(db, function(res) { 
-	    	if(callback != null) {
-	    		callback(res); 
-	    	}
-	    	db.close(); 
-	   	});
-	});
-}
+  console.log('Your new name is ' + name);
+});
 
-/* Function to be used in main.js */
-exports.list = function(req, res){
-	query(findDocuments, function(result) {
-		res.json({ result });
-	});
-};
+// call the built-in save method to save to the database
+chris.save(function(err) {
+  if (err) throw err;
 
-function findDocuments(db, callback) {
-	// Get the documents collection
-	var collection = db.collection('documents');
-	// Find all documents
-	collection.find({}).toArray(function(err, docs) { // or find({name: 'John'}) etc.
-		if(err) throw err;
-		// console.dir(docs);
-		callback(docs);
-	});
-}
+  console.log('User saved successfully!');
+});
 
-function insertDocuments(db, callback) {
-	// Get the documents collection - automatically created if doesn't exist
-	var collection = db.collection('documents');
-	// Insert some documents
-	collection.insertOne({name: 'John', age: 22, roles: ['admin']}); // callback is always optional
 
-	collection.insertMany([	{a : 1}, {a : 2}, {a : 3} ], function(err, result) {
-		if(err) throw err;
-		console.log("Inserted 3 documents into the document collection");
-		callback(result);
-	});
-}
+// --------------------------------------
 
-function updateDocument(db, callback) {
-	// Get the documents collection
-	var collection = db.collection('documents');
-	// Update document where a is 2, set b equal to 1
-	collection.updateOne({ a : 2 }, { $set: { b : 1 } }, function(err, result) {
-		if(err) throw err;
-		console.log("Updated the document with the field a equal to 2");
-		callback(result);
-	});  
-	// or collection.updateMany(filter, update, [options], [callback])
-}
+// FIND - find(), findOne(), findById()
+// MongoDB rich syntax supported 
+//	- e.g. User.find({ admin: false }).where('createdDate').gt(oneYearAgo).exec(callback);
 
-function deleteDocument(db, callback) {
-	var collection = db.collection('documents');
+// get all the users
+User.find({}, function(err, users) {
+  if (err) throw err;
 
-	collection.deleteOne({ a : 3 }, function(err, result) {
-		if(err) throw err;
-		console.log("Removed the document with the field a equal to 3");
-		callback(result);
-	});
-	// or collection.deleteMany(filter, [options], [callback])
-}
+  // object of all the users
+  console.log(users);
+});
+
+
+// get the user starlord55
+User.find({ username: 'starlord55' }, function(err, user) {
+  if (err) throw err;
+
+  // object of the user
+  console.log(user);
+});
+
+// UPDATE = FIND + SAVE
+
+// get a user with ID of 1
+User.findById(1, function(err, user) {
+  if (err) throw err;
+
+  // change the users location
+  user.location = 'UK';
+
+  // save the user
+  user.save(function(err) {
+    if (err) throw err;
+
+    console.log('User successfully updated!');
+  });
+});
+
+// find the user starlord55
+// update him to starlord 88
+User.findOneAndUpdate({ username: 'starlord55' }, { username: 'starlord88' }, function(err, user) {
+  if (err) throw err;
+
+  // we have the updated user returned to us
+  console.log(user);
+});
+
+// DELETE
+
+// get the user starlord55
+User.find({ username: 'starlord55' }, function(err, user) {
+  if (err) throw err;
+
+  // delete him
+  user.remove(function(err) {
+    if (err) throw err;
+
+    console.log('User successfully deleted!');
+  });
+});
+
+// OR like this
+User.findOneAndRemove({ username: 'starlord55' }, function(err) {
+  if (err) throw err;
+
+  console.log('User deleted!');
+});
+
+// OR
+User.remove({ username: 'abc' }, function(err) {
+  if(err) return handleError(err);
+  // removed!
+});
+
+
+// QUERIES - 2 types of syntax
+
+// With a JSON doc
+Person.
+  find({
+    occupation: /host/,
+    'name.last': 'Ghost',
+    age: { $gt: 17, $lt: 66 },
+    likes: { $in: ['vaporizing', 'talking'] }
+  }).
+  limit(10).
+  sort({ occupation: -1 }).
+  select({ name: 1, occupation: 1 }).
+  exec(callback);
+  
+// Using query builder
+Person.
+  find({ occupation: /host/ }).
+  where('name.last').equals('Ghost').
+  where('age').gt(17).lt(66).
+  where('likes').in(['vaporizing', 'talking']).
+  limit(10).
+  sort('-occupation').
+  select('name occupation').
+  exec(callback);
