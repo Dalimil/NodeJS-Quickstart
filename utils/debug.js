@@ -23,5 +23,8 @@ exports.requestInfo = function(req, res, next) {
 	req.requestDate = Date.now();
 	req.requestTime = (new Date()).toLocaleTimeString();
 	// console.log(req.requestTime + " - " + req.method + " " + req.url);
+	res.jsonPretty = function(data) {
+		this.end(JSON.stringify(data, null, 2)); // specify stringify() whitespace
+	};
 	next();
 };

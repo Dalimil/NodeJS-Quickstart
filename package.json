@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "connect-mongo": "^1.2.0",
+    "crypto": "0.0.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "mongoose": "^4.4.19",

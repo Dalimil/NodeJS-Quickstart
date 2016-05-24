@@ -6,6 +6,8 @@ module.exports = {
 
 	MONGODB_URI: 'mongodb://localhost:27017/myproject',
 
+	HASH_SECRET: '5jva083nvaljVeAj3n03nv',
+
 	FACEBOOK_AUTH: {
 		ID: "secretID",
 		SECRET: "secret"

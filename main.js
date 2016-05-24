@@ -45,7 +45,7 @@ var scheduledAlert = scheduler.schedule(10000, function() {
 // scheduledAlert.cancel();
 
 /** Route handlers */
-const dbController = require('./controllers/database');
+const userController = require('./controllers/users');
 const sockets = require('./controllers/sockets');
 sockets.attach(server); // attach() is Socket.IO specific
 const auth = require('./controllers/auth');
@@ -71,7 +71,7 @@ app.get('/sockets', function(req, res) {
 	res.render('sockets'); 
 });
 
-app.get('/articles', dbController.list);
+app.get('/list', userController.listAll);
 
 /** Facebook authentication - it's the same for Twitter */
 app.get('/login/facebook', auth.loginFacebook);
@@ -97,7 +97,7 @@ app.post('/file_upload', upload.single('avatar'), function(req, res) {
 app.route('/debug') 
 	.get(function(req, res) {
 		var info = req.requestInfo;
-		res.end(JSON.stringify(info, null, 2)); // specify stringify() whitespace
+		res.jsonPretty(info); // custom method
 	})
 	.post(function(req, res) {
 		// Or with status: res.status(500).json({ error: 'message' });

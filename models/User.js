@@ -1,5 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const crypto = require('crypto');
+const config = require('../config');
+
+function hash(text) {
+	var h = crypto.createHmac('sha256', config.HASH_SECRET).update(text);
+	return h.digest('hex');
+}
 
 // create a schema
 var userSchema = new Schema({
@@ -18,16 +25,11 @@ var userSchema = new Schema({
 });
 
 
-// Custom methods must be added to the schema before compiling it with mongoose.model()
-userSchema.methods.checkPassword = function(pass) {
-	this.comments.push({ body: comment, date: Date.now() });
-	// initializing everything from the document constructor is also OK
+// Custom methods can be added to the schema before compiling it with mongoose.model()
+userSchema.methods.checkPassword = function(textPass) {
+	return (this.password == hash(textPass));
 };
-userSchema.methods.addComment = function(comment) {
-	this.comments.push({ body: comment, date: Date.now() });
-	// initializing everything from the document constructor is also OK
-};
-// use: userAlice.addComment("foo")
+// use: userAlice.checkPassword("foo")
 
 // Static method
 userSchema.statics.findByName = function(name, cb) {
@@ -38,15 +40,17 @@ userSchema.statics.findByName = function(name, cb) {
 
 // Pre-hook/middleware function for the save() function
 userSchema.pre('save', function(next) {
-	// Perform complex validation, formatting, etc.
-
+	// Perform complex validation, formatting, hashing, etc.
+	if(this.isNew) { // built-in keyword
+		this.password = hash(this.password);
+	}
+	
 	var currentDate = new Date();
 	// change the updated_at field to current date
 	this.updated_at = currentDate;
 	if (!this.created_at) { // if doesn't exist
 		this.created_at = currentDate;
 	}
-
 	next();
 });
 
