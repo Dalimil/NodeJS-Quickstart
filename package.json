@@ -26,6 +26,7 @@
     "socket.io": "^1.4.6"
   },
   "devDependencies": {
+    "localtunnel": "^1.8.1",
     "nodemon": "^1.9.2"
   }
 }
