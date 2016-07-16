@@ -36,7 +36,7 @@ function getAllUsers(callback) {
 };
 
 function getUser(name) {
-	// get the user starlord55
+	// get the user 'alice'
 	User.find({ username: 'alice' }, function(err, user) {
 		if (err) throw err;
 
