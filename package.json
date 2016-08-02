@@ -1,6 +1,6 @@
 {
   "name": "nodejs-quickstart",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Node.js Quickstart/Demo app",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dalimil Hajek",
-  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.0",
     "connect-mongo": "^1.2.0",
