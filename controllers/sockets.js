@@ -1,9 +1,11 @@
-var io = require('socket.io')(); // new Server
+"use strict";
 
-var users = [];
+const io = require('socket.io')(); // new Server
 
-io.on('connection', function(socket) {
-	var uid = socket.id;
+let users = [];
+
+io.on('connection', (socket) => {
+	let uid = socket.id;
 	users.push(uid);
 	console.log("socket.io - a user connected - " + uid);
 
@@ -12,14 +14,14 @@ io.on('connection', function(socket) {
 	/* Send to a single user */
 	io.to(uid).emit('big_news', "Message for a particular user");
 
-	socket.on('user_clicked_button', function(data) {
+	socket.on('user_clicked_button', (data) => {
 		console.log(data);
 		socket.emit('all_ok', {'msg': 'thanks'}); // respond to the same client
 	});
 
-	socket.on('disconnect', function() {
+	socket.on('disconnect', () => {
 		console.log('user disconnected');
-		var index = users.indexOf(uid);
+		let index = users.indexOf(uid);
 		users.splice(index, 1); // remove from the array
 	});
 });

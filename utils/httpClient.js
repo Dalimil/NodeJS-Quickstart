@@ -1,5 +1,5 @@
 /** Sample code using the 'request' module to make server-side http requests */
-var request = require('request');
+const request = require('request');
 
 /* GET */
 request('http://example.com', function(error, response, body) {
@@ -27,8 +27,8 @@ request.post({
 );
 
 /* Cookies */
-var jar = request.jar();
-var cookie = request.cookie("name=John");
+let jar = request.jar();
+let cookie = request.cookie("name=John");
 jar.setCookie(cookie, 'http://example.com'); // which domain it belongs to
 
 request({ url: "http://example.com", jar: jar },

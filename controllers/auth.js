@@ -1,9 +1,11 @@
-var passport = require('passport');
-var FacebookStrategy = require('passport-facebook').Strategy;
-var TwitterStrategy  = require('passport-twitter').Strategy;
-var config = require('../config');
+"use strict";
 
-exports.init = function(app) {
+const passport = require('passport');
+const FacebookStrategy = require('passport-facebook').Strategy;
+const TwitterStrategy  = require('passport-twitter').Strategy;
+const config = require('../config');
+
+exports.init = (app) => {
 	app.use(passport.initialize());
 	app.use(passport.session());
 };
@@ -64,12 +66,12 @@ passport.use(new TwitterStrategy({
 // from the database when deserializing.  However, due to the fact that this
 // example does not have a database, the complete Twitter profile is serialized
 // and deserialized.
-passport.serializeUser(function(user, cb) {
+passport.serializeUser((user, cb) => {
 	cb(null, user);
 	// OR cb(null, user.id)
 });
 
-passport.deserializeUser(function(obj, cb) {
+passport.deserializeUser((obj, cb) => {
 	cb(null, obj);
 	// OR User.findById(id, function(err, user) { cb(err, user); });
 });

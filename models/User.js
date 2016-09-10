@@ -1,15 +1,17 @@
+"use strict";
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const crypto = require('crypto');
 const config = require('../config');
 
 function hash(text) {
-	var h = crypto.createHmac('sha256', config.HASH_SECRET).update(text);
+	let h = crypto.createHmac('sha256', config.HASH_SECRET).update(text);
 	return h.digest('hex');
 }
 
 // create a schema
-var userSchema = new Schema({
+let userSchema = new Schema({
 	name: String,
 	username: { type: String, required: true, unique: true },
 	password: { type: String, required: true },
@@ -26,13 +28,12 @@ var userSchema = new Schema({
 
 
 // Custom methods can be added to the schema before compiling it with mongoose.model()
-userSchema.methods.checkPassword = function(textPass) {
-	return (this.password == hash(textPass));
-};
+userSchema.methods.checkPassword = (textPass) => (this.password == hash(textPass));
+
 // use: userAlice.checkPassword("foo")
 
 // Static method
-userSchema.statics.findByName = function(name, cb) {
+userSchema.statics.findByName = (name, cb) => {
 	return this.find({ name: new RegExp(name, 'i') }, cb); // i = case-insensitive
 };
 // use: User.findByName('Alice', function(err, users) { console.log(users); });
@@ -45,7 +46,7 @@ userSchema.pre('save', function(next) {
 		this.password = hash(this.password);
 	}
 	
-	var currentDate = new Date();
+	let currentDate = new Date();
 	// change the updated_at field to current date
 	this.updated_at = currentDate;
 	if (!this.created_at) { // if doesn't exist
@@ -55,7 +56,7 @@ userSchema.pre('save', function(next) {
 });
 
 // the schema is useless so far -> create a model using it
-var User = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User; // make the model available 
 

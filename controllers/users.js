@@ -1,17 +1,17 @@
+"use strict";
+
 // Iterface functions for our Mongoose MongoDB model
-var User = require('../models/User');
+const User = require('../models/User');
   
 // create a new user called John
-var user = new User({
+let user = new User({
 	name: 'John Quill',
 	username: 'johnny',
 	password: 'secret_password' 
 });
 
 exports.listAll = function(req, res){ // route
-	getAllUsers(function(users) {
-		res.jsonPretty({ users: users });
-	});
+	getAllUsers((users) => res.jsonPretty({ users: users }));
 };
 
 exports.addUser = addUser;
@@ -20,7 +20,7 @@ exports.getAllUsers = getAllUsers;
 
 function addUser(user) {
 	// call the built-in save() to save to the database
-	user.save(function(err) {
+	user.save((err) => {
 		if (err) throw err;
 		console.log('User saved successfully!');
 	});
@@ -28,7 +28,7 @@ function addUser(user) {
 
 // FIND - find(), findOne(), findById()
 function getAllUsers(callback) {
-	User.find({}, function(err, users) {
+	User.find({}, (err, users) => {
 		if (err) throw err;
 		
 		callback(users); // all the users
@@ -37,7 +37,7 @@ function getAllUsers(callback) {
 
 function getUser(name) {
 	// get the user 'alice'
-	User.find({ username: 'alice' }, function(err, user) {
+	User.find({ username: 'alice' }, (err, user) => {
 		if (err) throw err;
 
 		console.log(user); // user object
@@ -46,7 +46,7 @@ function getUser(name) {
 
 // DELETE - remove() or findOneAndRemove()
 function removeUser(name) {
-	User.remove({ username: 'alice' }, function(err) {
+	User.remove({ username: 'alice' }, (err) => {
 		if(err) return handleError(err);
 
 		console.log('user removed');
@@ -56,14 +56,14 @@ function removeUser(name) {
 // UPDATE = FIND + SAVE
 function updateUser() {
 	// get a user with ID of 1
-	User.findById(1, function(err, user) {
+	User.findById(1, (err, user) => {
 		if (err) throw err;
 
 		// change the users location
 		user.location = 'UK';
 
 		// save the user - or maybe delete via user.remove()
-		user.save(function(err) {
+		user.save((err) => {
 			if (err) throw err;
 
 			console.log('User successfully updated!');

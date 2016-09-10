@@ -1,26 +1,24 @@
+"use strict";
+
 function OneOffTask(task) {
 	this.task = task;
 
-	this.cancel = function() {
-		clearTimeout(task);
-	};
+	this.cancel = () => clearTimeout(task);
 }
 
 function RepeatedTask(task) {
 	this.task = task;
 
-	this.cancel = function() {
-		clearInterval(task);
-	};
+	this.cancel = () => clearInterval(task);
 }
 
 
-exports.scheduleOnce = function(timeout, fn) {
-	var task = setTimeout(fn, timeout);
+exports.scheduleOnce = (timeout, fn) => {
+	let task = setTimeout(fn, timeout);
 	return new OneOffTask(task);
-}
+};
 
-exports.schedule = function(repeatTime, fn) {
-	var task = setInterval(fn, repeatTime);
+exports.schedule = (repeatTime, fn) => {
+	let task = setInterval(fn, repeatTime);
 	return new RepeatedTask(task);
-}
+};
