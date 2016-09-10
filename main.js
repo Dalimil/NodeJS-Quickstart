@@ -1,12 +1,15 @@
+"use strict";
+
 const express = require('express');
 const bodyParser = require('body-parser'); // additional body parsing
 const multer = require('multer'); // file upload (multipart/form-data)
 const morgan = require('morgan'); // General request logger
-const session = require('express-session'); // session cookies
+const Cookies = require('cookies'); // General cookie handling
+const session = require('express-session'); // SESSION cookies
 const MongoStore = require('connect-mongo')(session); // Session data storage (server-side MongoDB)
 const mongoose = require('mongoose'); // ORM for MongoDB
 const path = require('path'); // path.join
-const pp = function(s){ return path.join(__dirname, s); };
+const pp = s => path.join(__dirname, s);
 const app = express();
 const server = require('http').createServer(app); // or https
 const config = require('./config');
@@ -14,6 +17,8 @@ const config = require('./config');
 // Pug template engine - previously Jade - http://jade-lang.com/
 app.set('views', pp('views')); // where templates are located
 app.set('view engine', 'pug'); // Express loads the module internally
+
+app.use(Cookies.express());
 
 // Add top-level (could be made route-specific) parsers that will populate request.body
 app.use(bodyParser.urlencoded({ extended: false })); // application/x-www-form-urlencoded
@@ -27,7 +32,7 @@ app.use(debug.requestInfo); // Middleware function - Order/Place of call importa
 
 mongoose.connect(config.MONGODB_URI); // Connect to MongoDB
 
-// Set up secure cookie session
+// Set up secure SESSION cookies
 app.use(session({
 	secret: config.APP_SECRET,
 	saveUninitialized: false,
@@ -38,8 +43,8 @@ app.use(session({
 /** Set up periodic tasks */
 const scheduler = require('./utils/scheduler');
 // use scheduleOnce() or schedule() for one-off or repeated tasks respectively
-var scheduledAlert = scheduler.schedule(10000, function() { 
-	var currentTime = (new Date()).toLocaleTimeString();
+let scheduledAlert = scheduler.schedule(10000, () => {
+	let currentTime = new Date().toLocaleTimeString();
 	console.log("Time: " + currentTime); 
 });
 // scheduledAlert.cancel();
@@ -55,9 +60,15 @@ auth.init(app); // Set up passport module
 app.use('/static', express.static(pp('public'))); // first arg could be omitted
 
 app.get('/', function(req, res) {
+	// Standard cookies
+	req.cookies.set("my-cookie-key", "my-cookie-string-value");
+	req.cookies.get("my-cookie-key");
+
+	// SESSION cookies
 	req.session.shop = { items: [1,2,3] }; // set cookie - any json or string
 	req.session.views += 1;
 	// delete req.session.shop;
+
 	// res.json({ user: 'john' }); // Send json response
 	// res.sendFile( __dirname + "/" + "index.html" );
 	// Now render .pug template with any JSON locals/variables:
@@ -95,20 +106,15 @@ app.post('/file_upload', upload.single('avatar'), function(req, res) {
 
 /* Specify both GET and POST endpoint */
 app.route('/debug') 
-	.get(function(req, res) {
-		var info = req.requestInfo;
-		res.jsonPretty(info); // custom method
-	})
-	.post(function(req, res) {
-		// Or with status: res.status(500).json({ error: 'message' });
-		res.json(req.requestInfo);
-	});
+	.get((req, res) => res.jsonPretty(req.requestInfo)) // jsonPretty() is custom
+	.post((req, res) => res.status(200).json(req.requestInfo));
 
 
 server.listen(config.PORT, function() {
-	var host = server.address().address;
-	var port = server.address().port;
+	let host = server.address().address;
+	let port = server.address().port;
+	let currentTime = new Date().toLocaleTimeString();
 	// console.log(app.get('env'));
 	console.log("Server dir: " + pp('/'));
-	console.log((new Date()).toLocaleTimeString() + " - Server running at http://localhost:" + port);
+	console.log(currentTime + " - Server running at http://localhost:" + port);
 });
