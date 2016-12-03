@@ -8,14 +8,14 @@ const Cookies = require('cookies'); // General cookie handling
 const session = require('express-session'); // SESSION cookies
 const MongoStore = require('connect-mongo')(session); // Session data storage (server-side MongoDB)
 const mongoose = require('mongoose'); // ORM for MongoDB
-const path = require('path'); // path.join
+const path = require('path');
 const pp = s => path.join(__dirname, s);
 const app = express();
 const server = require('http').createServer(app); // or https
 const config = require('./config');
 
 // Pug template engine - previously Jade - http://jade-lang.com/
-app.set('views', pp('views')); // where templates are located
+app.set('views', pp('../views')); // where templates are located
 app.set('view engine', 'pug'); // Express loads the module internally
 
 app.use(Cookies.express());
@@ -23,7 +23,7 @@ app.use(Cookies.express());
 // Add top-level (could be made route-specific) parsers that will populate request.body
 app.use(bodyParser.urlencoded({ extended: false })); // application/x-www-form-urlencoded
 app.use(bodyParser.json()); // application/json
-const upload = multer({ dest: pp('uploads/') }); // Use with multipart/form-data
+const upload = multer({ dest: pp('../uploads/') }); // Use with multipart/form-data
 
 app.use(morgan('dev')); // Set up logger
 const debug = require('./utils/debug'); // + my own logger
@@ -57,7 +57,7 @@ const auth = require('./controllers/auth');
 auth.init(app); // Set up passport module
 
 // Expose urls like /static/images/logo.png 
-app.use('/static', express.static(pp('public'))); // first arg could be omitted
+app.use('/static', express.static(pp('../public'))); // first arg could be omitted
 
 app.get('/', function(req, res) {
 	// Standard cookies
@@ -110,11 +110,6 @@ app.route('/debug')
 	.post((req, res) => res.status(200).json(req.requestInfo));
 
 
-server.listen(config.PORT, function() {
-	let host = server.address().address;
-	let port = server.address().port;
-	let currentTime = new Date().toLocaleTimeString();
-	// console.log(app.get('env'));
-	console.log("Server dir: " + pp('/'));
-	console.log(currentTime + " - Server running at http://localhost:" + port);
-});
+module.exports = {
+	server: server
+};
