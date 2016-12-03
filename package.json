@@ -1,12 +1,12 @@
 {
   "name": "nodejs-quickstart",
   "version": "0.1.0",
+  "license": "MPL-2.0",
   "description": "Node.js Quickstart/Demo app",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
-    "babel": "babel public/js --watch --out-dir public/build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "babel": "babel public/js --watch --out-dir public/build"
   },
   "author": "Dalimil Hajek",
   "dependencies": {
