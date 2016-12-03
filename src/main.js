@@ -56,9 +56,6 @@ sockets.attach(server); // attach() is Socket.IO specific
 const auth = require('./controllers/auth');
 auth.init(app); // Set up passport module
 
-// Expose urls like /static/images/logo.png 
-app.use('/static', express.static(pp('../public'))); // first arg could be omitted
-
 app.get('/', function(req, res) {
 	// Standard cookies
 	req.cookies.set("my-cookie-key", "my-cookie-string-value");
@@ -111,5 +108,6 @@ app.route('/debug')
 
 
 module.exports = {
-	server: server
+	server: server,
+	app: app
 };
