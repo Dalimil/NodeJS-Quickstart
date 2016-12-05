@@ -15,7 +15,7 @@ const server = require('http').createServer(app); // or https
 const config = require('./config');
 
 // Pug template engine - previously Jade - http://jade-lang.com/
-app.set('views', pp('../views')); // where templates are located
+app.set('views', pp('../client/views')); // where templates are located
 app.set('view engine', 'pug'); // Express loads the module internally
 
 app.use(Cookies.express());
@@ -23,7 +23,7 @@ app.use(Cookies.express());
 // Add top-level (could be made route-specific) parsers that will populate request.body
 app.use(bodyParser.urlencoded({ extended: false })); // application/x-www-form-urlencoded
 app.use(bodyParser.json()); // application/json
-const upload = multer({ dest: pp('../uploads/') }); // Use with multipart/form-data
+const upload = multer({ dest: pp('../client/public/uploads/') }); // Use with multipart/form-data
 
 app.use(morgan('dev')); // Set up logger
 const debug = require('./utils/debug'); // + my own logger

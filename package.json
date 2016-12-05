@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "license": "MPL-2.0",
   "description": "Node.js Quickstart/Demo app",
-  "main": "server.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "babel": "babel public/js --watch --out-dir public/build"
+    "start": "nodemon app.js",
+    "babel": "babel src/client/public/js --watch --out-dir src/client/public/build"
   },
   "author": "Dalimil Hajek",
   "dependencies": {

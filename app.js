@@ -2,13 +2,13 @@
 
 const path = require('path');
 const express = require('express');
-const { server: Server, app } = require('./src/main');
+const { server: Server, app } = require('./src/server/main');
 
 const PORT = process.env.PORT || 8080;
 const pp = s => path.join(__dirname, s);
 
 // Expose static urls like /static/images/logo.png 
-app.use('/', express.static(pp('public'))); // redirect root
+app.use('/', express.static(pp('src/client/public')));
 app.use('/js', express.static(pp('node_modules/bootstrap/dist/js'))); // redirect bootstrap JS
 app.use('/js', express.static(pp('node_modules/jquery/dist'))); // redirect JS jQuery
 app.use('/css', express.static(pp('node_modules/bootstrap/dist/css'))); // redirect CSS bootstrap

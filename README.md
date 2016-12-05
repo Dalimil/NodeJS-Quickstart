@@ -16,6 +16,10 @@ npm start       # starts the server
 npm run babel   # compiles client-side JS + watch changes
 ```
 
+## Dev TODO
+
+Webpack, React, Redux: https://github.com/verekia/js-stack-from-scratch
+
 ## Screenshots
 
 ![01](https://github.com/Dalimil/NodeJS-Quickstart/blob/master/docs/screenshots/demo.png)
