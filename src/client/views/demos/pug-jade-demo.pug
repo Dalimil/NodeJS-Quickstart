@@ -1,0 +1,33 @@
+// This is a comment
+// extends layout <- to extend another template
+// block scripts <- to substitute a parent-template section
+// include header <- to paste the content of another template here
+
+p.
+	Putting plain text inside a tag... 
+	Just use the dot syntax
+img(src='/img/nodejs.png', width='20%')
+hr
+h3 File upload
+- var formData = { buttonName: 'Upload file' } /* '-' to use JavaScript */
+if formData
+	// Can also use regular html
+	<form action="file_upload" method="POST" enctype="multipart/form-data">
+		<input type="text" name="username" size="50" /><br />
+		input(type="file" name="avatar")
+		button#myButton.btn.btn-primary(style='width: '+(100/6)+'%') #{formData.buttonName}
+	</form>
+else
+	p Something is wrong
+	ul
+	- for (var i=1; i<= 5; i++) {
+		li= i + ". Hello"
+	- }
+	br
+	- var languages = ['php', 'node', 'ruby']
+	div 
+		// or 'for value in languages'
+		each value, index in languages 
+			// equals= use variables here
+			p= index + ". " + value
+

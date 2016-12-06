@@ -69,8 +69,8 @@ app.get('/', function(req, res) {
 	// res.json({ user: 'john' }); // Send json response
 	// res.sendFile( __dirname + "/" + "index.html" );
 	// Now render .pug template with any JSON locals/variables:
-	res.render('cover', 
-		{ title: 'Demo', data: { name: "Shop", items: [3, 5, 8] } } 
+	res.render('index', 
+		{ title: 'Demo', data: { name: "any json", items: [3, 5, 8] } } 
 	); 
 });
 

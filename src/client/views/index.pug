@@ -1,58 +1,82 @@
 extends layout
 
 block scripts
-	script(src='/build/print.js')
+  title= title
+  script(src='/build/print.js')
+
+  script.
+    $(function() {
+      $(".header-nav a").click(function() {
+        // switch link/tab/bookmark highlight
+        $(".header-nav li").removeClass("active");
+        $(this).parent().addClass("active");
+
+        // switch screen contents
+        $(".content-wrapper > div").removeClass("active");
+        $("#" + $(this).data("target")).addClass("active");
+      });
+    });
 
 block body
-	title= title
-	p.
-		Putting plain text inside a tag... 
-		Just use the dot syntax
-	img(src='/img/nodejs.png', width='20%')
-	hr
-	h3 File upload
-	- var formData = { buttonName: 'Upload file' } /* '-' to use JavaScript */
-	if formData
-		// Can also use regular html
-		<form action="file_upload" method="POST" enctype="multipart/form-data">
-			<input type="text" name="username" size="50" /><br />
-			input(type="file" name="avatar")
-			button#myButton.btn.btn-primary(style='width: '+(100/6)+'%') #{formData.buttonName}
-		</form>
-	else
-		p Something is wrong
-		ul
-		- for (var i=1; i<= 5; i++) {
-			li= i + ". Hello"
-		- }
-		br
-		- var languages = ['php', 'node', 'ruby']
-		div 
-			// or 'for value in languages'
-			each value, index in languages 
-				p= index + ". " + value
-	
-	// Font Awesome demo
-	<br /><hr>
-	<div class="btn-group open">
-		<a class="btn btn-primary" href="#"><i class="fa fa-user fa-fw"></i> User</a>
-		<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
-		<span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
-		</a>
-		<ul class="dropdown-menu">
-			<li><a href="#"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
-			<li><a href="#"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
-			<li><a href="#"><i class="fa fa-ban fa-fw"></i> Ban</a></li>
-			<li class="divider"></li>
-			<li><a href="#"><i class="fa fa-unlock"></i> Make admin</a></li>
-		</ul>
-	</div>
-	<br /><br />
-	<div class="input-group margin-bottom-sm">
-		<span class="input-group-addon"><i class="fa fa-envelope-o fa-fw"></i></span>
-		<input class="form-control" type="text" placeholder="Email address">
-	</div>
-	<div class="input-group">
-		<span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-		<input class="form-control" type="password" placeholder="Password">
-	</div>
+  <div class="body-inner">
+    <div class="page-wrapper">
+
+      // Navigation header
+      <header>
+        <h3 class="header-title">Cover</h3>
+        <nav>
+          <ul class="nav header-nav">
+            <li class="active"><a href="#" data-target="tab-home">Home</a></li>
+            <li><a href="#" data-target="tab-features">Features</a></li>
+            <li><a href="#" data-target="tab-sign-in">Sign In</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      // Main Content
+      <div class="content-wrapper">
+
+        // Tab Home
+        <div id="tab-home" class="active">
+          <h1>Cover your page.</h1>
+          <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
+          <p class="lead">
+            <a href="#" class="btn btn-lg btn-default">Learn more</a>
+          </p>
+        </div>
+        
+        // Tab Features
+        <div id="tab-features">
+          // Include another template
+          include demos/font-awesome-demo
+          hr
+          include demos/bootstrap-demo
+        </div>
+
+        // Tab Sing In
+        <div id="tab-sign-in">
+          <form class="form-signin">
+            <h2 class="form-signin-heading">Please sign in</h2>
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+            <label for="inputPassword" class="sr-only">Password</label>
+            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" value="remember-me"> This is a Checkbox
+              </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+          </form>
+        </div>
+
+      </div>
+
+
+      // Footer
+      <footer>
+        <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>.</p>
+      </footer>
+
+    </div>
+  </div>
