@@ -1,7 +1,11 @@
 "use strict";
 
-const evens = Array(10).fill(0).map(v => v * 2);
-const nums = evens.map((v, i) => v + i);
+const { evenNumbers } = require("./print");
 
-console.log("Welcome to your web application's JavaScript!");
-console.log(evens, nums);
+evenNumbers.forEach((x, i) => {
+	if (i < 5) {
+		console.log(i * 3);
+	}
+});
+
+console.log("Main module loaded.");

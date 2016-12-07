@@ -1,5 +1,10 @@
 "use strict";
 
-const k = Array(5).fill(0);
-k.forEach((x, i) => console.log(i * 3));
+const evens = Array(10).fill(0).map(v => v * 2);
+
+console.log("Hi, I am a client-side JS module print.js");
+
+module.exports = {
+	evenNumbers: evens
+};
 
