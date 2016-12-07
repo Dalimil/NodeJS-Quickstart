@@ -7,8 +7,7 @@
   "scripts": {
     "build-debug": "webpack --watch",
     "build-prod": "webpack -p",
-    "start": "nodemon app.js",
-    "babel": "babel src/client/public/js --watch --out-dir src/client/public/build"
+    "start": "nodemon app.js"
   },
   "author": "Dalimil Hajek",
   "dependencies": {
