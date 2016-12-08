@@ -10,4 +10,6 @@ module.exports = {
 			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
 		]
 	}
+
+	//devtool: "cheap-eval-source-map",
 }

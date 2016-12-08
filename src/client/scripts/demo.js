@@ -1,2 +1,2 @@
 
-console.log('demo.js is now loaded...');
+console.log('demo.js module is now loaded...');

@@ -12,13 +12,15 @@ Using MongoDB? It should be running at localhost:27017
 ## Run
 
 ```sh
-npm start       # starts the server
-npm run babel   # compiles client-side JS + watch changes
+npm run all        # run server and watch (server + client) changes
+
+# Alternatively
+npm start          # run server and watch server changes only
+npm run build-dev  # bundle client-side + watch client changes only
 ```
 
 ## Dev TODO
 
-- Webpack + dev server with hot reloading
 - React, Redux: https://github.com/verekia/js-stack-from-scratch
 	- from title React onwards: https://medium.com/@dabit3/beginner-s-guide-to-webpack-b1f1a3638460#4437
 

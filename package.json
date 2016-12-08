@@ -5,9 +5,11 @@
   "description": "Node.js Quickstart/Demo app",
   "main": "app.js",
   "scripts": {
-    "build-debug": "webpack --watch",
-    "build-prod": "webpack -p",
-    "start": "nodemon app.js"
+    "build-dev": "webpack --progress --watch",
+    "build": "webpack --progress -p",
+    "start": "nodemon app.js",
+    "all": "concurrently --kill-others \"npm run build-dev\" \"npm run start\"",
+    "deploy": "lt --port 8080 -s nodejsapp -o"
   },
   "author": "Dalimil Hajek",
   "dependencies": {
@@ -34,7 +36,8 @@
     "babel-cli": "^6.18.0",
     "babel-loader": "^6.2.8",
     "babel-preset-latest": "^6.16.0",
-    "localtunnel": "^1.8.1",
+    "concurrently": "^3.1.0",
+    "localtunnel": "^1.8.2",
     "nodemon": "^1.9.2",
     "webpack": "^1.14.0"
   }
