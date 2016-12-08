@@ -1,8 +1,10 @@
+const path = require('path');
+
 module.exports = {
 	entry: ['./src/client/scripts/main.js', './src/client/scripts/demo.js'],
 	output: {
-		filename: 'bundle.js',
-		path: './src/client/public/build'
+		path: path.resolve(__dirname, './src/client/public/build'), // absolute path
+		filename: 'bundle.js'
 	},
 	module: {
 		loaders: [
