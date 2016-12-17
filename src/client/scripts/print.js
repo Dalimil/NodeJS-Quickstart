@@ -1,6 +1,6 @@
 "use strict";
 
-const evens = Array(10).fill(0).map(v => v * 2);
+const evenNums = Array(10).fill(0).map((v, i) => i * 2);
 
 console.log("Hi, I am a client-side JS module print.js");
 
@@ -14,13 +14,15 @@ class Dog {
   }
 }
 
-export evenNumbers as evens;
-export Dog;
+export {
+	evenNums as evenNumbers,
+	Dog 
+};
 
 /*// Old syntax is fine too: 
 
 module.exports = {
-	evenNumbers: evens,
+	evenNumbers: evenNums,
 	Dog
 };
 */

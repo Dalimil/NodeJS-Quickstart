@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-	entry: ['./src/client/scripts/main.js', './src/client/scripts/demo.js'],
+	entry: ['./src/client/scripts/main.js', './src/client/scripts/react-demo/index.jsx'],
 	output: {
 		path: path.resolve(__dirname, './src/client/public/build'), // absolute path
 		filename: 'bundle.js'
@@ -10,15 +10,17 @@ module.exports = {
 		loaders: [
 			// Webpack should run sources through Babel when it bundles them
 			{
-				test: /\.js$/,
+				test: /\.jsx?$/,
 				exclude: /node_modules/,
 				loader: "babel-loader",
 				query: {
-					presets: ['latest']
+					presets: ["react", "latest"]
 				}
 			}
 		]
+	},
+	resolve: {
+		// want to be able to 'import' these filenames in code without explicit extensions
+		extensions: ['', '.js', '.jsx']
 	}
-
-	//devtool: "cheap-eval-source-map",
 }

@@ -1,14 +1,12 @@
 "use strict";
 
-const { Dog, evenNumbers } = require("./print");
+const { Dog, evenNumbers: evens } = require("./print");
 
 const toby = new Dog("Toby");
 toby.bark();
 
-evenNumbers.forEach((x, i) => {
-	if (i < 5) {
-		console.log(i * 3);
-	}
-});
+const result = evens.reduce((accum, val) => {
+	return (val < 10) ? `${accum}--${val * 3}` : accum;
+}, ">");
 
-console.log("Main module loaded.");
+console.log("Main module loaded.", result);
