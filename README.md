@@ -1,10 +1,11 @@
 # NodeJS-Quickstart
 Basic Node.js web application
 
-## Installation
+## Setup
 
 ```sh
-npm install   # install dependencies
+npm install -g yarn  # install yarn
+yarn                 # install dependencies
 ```
 
 Using MongoDB? It should be running at localhost:27017
@@ -12,17 +13,30 @@ Using MongoDB? It should be running at localhost:27017
 ## Run
 
 ```sh
-npm run all        # run server and watch (server + client) changes
+yarn run all        # run server and watch (server + client) changes
 
 # Alternatively
-npm start          # run server and watch server changes only
-npm run build-dev  # bundle client-side + watch client changes only
+yarn start          # run server and watch server changes only
+yarn run build-dev  # bundle client-side + watch client changes only
 ```
 
-## Dev TODO
+## DEV
 
-- React, Redux: https://github.com/verekia/js-stack-from-scratch
-	- from title React onwards: https://medium.com/@dabit3/beginner-s-guide-to-webpack-b1f1a3638460#4437
+### Yarn tutorial
+```bash
+yarn                       # Install all dependencies
+yarn init                  # Starting a new project
+yarn add [package]         # Add dependency
+yarn add --dev [package]   # Add dev dependency
+yarn remove [package]      # Remove dependency
+yarn outdated              # Check for outdated deps
+yarn upgrade [package]     # Update dependency
+yarn upgrade               # Update all dependencies
+```
+
+## TODO
+
+- Redux demo
 
 ## Screenshots
 
