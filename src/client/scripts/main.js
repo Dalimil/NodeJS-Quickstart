@@ -1,7 +1,9 @@
 "use strict";
 
-const { evenNumbers } = require("./print");
-// or import mymodule from 'path/to/module'
+const { Dog, evenNumbers } = require("./print");
+
+const toby = new Dog("Toby");
+toby.bark();
 
 evenNumbers.forEach((x, i) => {
 	if (i < 5) {

@@ -9,7 +9,14 @@ module.exports = {
 	module: {
 		loaders: [
 			// Webpack should run sources through Babel when it bundles them
-			{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: "babel-loader",
+				query: {
+					presets: ['latest']
+				}
+			}
 		]
 	}
 
