@@ -20,8 +20,6 @@ const list = [
   },
 ];
 
-const isSearched = (query) => (item) => !query || item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-
 class App extends Component {
 
   constructor(props) {
@@ -30,25 +28,42 @@ class App extends Component {
     this.state = {
       list,
       query: '',
+      secondsElapsed: 0
     };
 
     this.onSearchChange = this.onSearchChange.bind(this);
   }
+
+  tick() {
+    this.setState((prevState) => ({
+      secondsElapsed: prevState.secondsElapsed + 1
+    }));
+  }
+
+  componentDidMount() {
+    this.interval = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
 
   onSearchChange(event) {
     this.setState({ query: event.target.value });
   }
 
   render() {
-    const { query, list } = this.state;
     return (
       <div className="page">
+        <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
+
         <div className="interactions">
-          <Search value={query} onChange={this.onSearchChange}>
+          <Search value={this.state.query} onChange={this.onSearchChange}>
             Search
           </Search>
         </div>
-        <Table list={list} pattern={query} />
+        <Table list={this.state.list} pattern={this.state.query} />
       </div>
     );
   }
@@ -59,6 +74,8 @@ const Search = ({ value, onChange, children }) =>
   <form>
     {children} <input type="text" value={value} onChange={onChange} />
   </form>
+
+const isSearched = (query) => (item) => !query || item.title.toLowerCase().indexOf(query.toLowerCase()) !== -1;
 
 const Table = ({ list, pattern }) =>
   <div className="table">

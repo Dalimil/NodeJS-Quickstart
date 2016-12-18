@@ -7,9 +7,13 @@ const App = props => (
   </div>
 );
 
-/*ReactDOM.render(
-  <App message="Hello World" />,
-  document.getElementById('my-react-root')
-);*/
+// Wait for DOM loaded
+$(() => {
 
-console.log('React-demo module is now loaded...');
+	ReactDOM.render(
+	  <App message="Hello World!" />,
+	  document.getElementById("my-react-root")
+	);
+
+	console.log('React-demo module is now loaded...');
+});

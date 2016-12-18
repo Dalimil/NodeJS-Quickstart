@@ -12,7 +12,14 @@ html
 		// jQuery and other libs can also be included via require inside scripts
 		script(src='/js/jquery.min.js')
 		script(src='/js/bootstrap.min.js')
-		script(src='/build/bundle.js')
+		
+		- var productionMode = false
+		if productionMode
+			script(src='/build/bundle.js')
+		else
+			// bundle from webpack-dev-server (hot reloading using web-sockets + iframe)
+			script(src='http://localhost:8081/bundle.js')
+				
 
 		block scripts
 

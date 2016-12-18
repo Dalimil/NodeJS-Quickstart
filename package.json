@@ -5,10 +5,13 @@
   "description": "Node.js Quickstart/Demo app",
   "main": "app.js",
   "scripts": {
-    "build-dev": "webpack --progress --watch",
+    "start": "node app.js",
+    "server": "nodemon app.js --watch src/server --watch src/shared",
     "build": "webpack --progress -p",
-    "start": "nodemon app.js",
-    "all": "concurrently --kill-others \"npm run build-dev\" \"npm run start\"",
+    "build-and-watch": "webpack --progress --watch",
+    "webpack-dev-iframe": "webpack-dev-server --port 8081 --content-base http://localhost:8080",
+    "webpack-dev-inline": "webpack-dev-server --port 8081 --inline",
+    "all": "concurrently --kill-others \"yarn run webpack-dev-inline\" \"npm run start\"",
     "deploy": "lt --port 8080 -s nodejsapp -o"
   },
   "author": "Dalimil Hajek",
@@ -42,6 +45,7 @@
     "concurrently": "^3.1.0",
     "localtunnel": "^1.8.2",
     "nodemon": "^1.9.2",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "webpack-dev-server": "^1.16.2"
   }
 }

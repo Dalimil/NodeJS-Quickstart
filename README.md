@@ -13,11 +13,38 @@ Using MongoDB? It should be running at localhost:27017
 ## Run
 
 ```sh
-yarn run all        # run server and watch (server + client) changes
+yarn run all   # run server and watch (server + client) changes
+```
 
-# Alternatively
-yarn start          # run server and watch server changes only
-yarn run build-dev  # bundle client-side + watch client changes only
+#### MANUAL RELOADING
+- templates load pre-compiled `bundle.js` (file-written)
+
+```bash
+# Production (build once - no watch)
+yarn run build
+yarn start
+
+# Manual client reloading (F5 refresh)
+yarn run build-and-watch    # bundle client-side + watch client changes only
+yarn run server             # run server and watch server changes only
+```
+
+#### HOT RELOADING
+- templates load webpack-dev-server's `bundle.js` (in-memory)
+
+```bash
+# Hot client reloading (iframed)
+# - safer when our app uses WebSockets
+yarn run webpack-dev-iframe
+yarn run server
+firefox localhost:8081/webpack-dev-server/
+
+# Hot client reloading (inline)
+# - could be buggy if app also uses WebSockets (conflicts)
+yarn run webpack-dev-inline
+yarn run server
+firefox localhost:8080
+
 ```
 
 ## DEV
@@ -35,6 +62,10 @@ yarn upgrade               # Update all dependencies
 ```
 
 ## TODO
+
+- Eslint demo
+
+https://github.com/verekia/js-stack-from-scratch/tree/master/tutorial/6-eslint
 
 - Redux demo
 
