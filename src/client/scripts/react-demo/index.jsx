@@ -22,10 +22,14 @@ class App extends React.Component {
     return (
     	<div>
     		<strong>Theme: {this.props.theme}</strong>
+
     		<Timer /> {/* I imported Timer from my own module */}
-    		{this.props.messages.map(m => {
-    			return <SimpleComponent message={m} />;
-    		})}
+
+    		{this.props.messages.map((m, index) =>
+    			// 'key' helps React optimize redrawing of changing list elements
+    			// (using index is often NOT a good choice)
+    			<SimpleComponent message={m} key={index} />
+    		)}
     	</div>
     );
   }

@@ -9,6 +9,9 @@ class Timer extends React.Component {
       secondsElapsed: 0,
       somethingElseUsedInRender: "part-of-state"
     };
+
+    // This binding is necessary to make `this` work in the callback
+    this.handleClick = this.handleClick.bind(this);
   }
 
   tick() {
@@ -16,7 +19,12 @@ class Timer extends React.Component {
     this.setState((prevState) => ({
       secondsElapsed: prevState.secondsElapsed + 1
     }));
-    // or: this.setState({ secondsElapsed: 42 });
+  }
+
+  handleClick() {
+    this.setState({
+      secondsElapsed: 0
+    });
   }
 
   componentDidMount() {
@@ -28,8 +36,13 @@ class Timer extends React.Component {
   }
 
   render() {
+    const resetButton = <button onClick={this.handleClick}>Reset</button>;
+    
     return (
-      <div>Seconds Elapsed: {this.state.secondsElapsed}</div>
+      <div>
+        Seconds Elapsed: {this.state.secondsElapsed}<br />
+        { resetButton }
+      </div>
     );
   }
 }
