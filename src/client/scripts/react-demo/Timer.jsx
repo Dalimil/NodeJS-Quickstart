@@ -21,7 +21,10 @@ class Timer extends React.Component {
     }));
   }
 
-  handleClick() {
+  handleClick(e) {
+    // prevent a-href redirect
+    e.preventDefault();
+
     this.setState({
       secondsElapsed: 0
     });
@@ -36,8 +39,8 @@ class Timer extends React.Component {
   }
 
   render() {
-    const resetButton = <button onClick={this.handleClick}>Reset</button>;
-    
+    const resetButton = <a href="#" onClick={this.handleClick}>Reset</a>;
+
     return (
       <div>
         Seconds Elapsed: {this.state.secondsElapsed}<br />

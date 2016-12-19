@@ -20,8 +20,10 @@ class App extends React.Component {
 
   render() {
     return (
-    	<div>
-    		<strong>Theme: {this.props.theme}</strong>
+    	<div className="app-div-class">
+    		<span style={{color: 'red', fontWeight: 'bold'}}>
+    			Theme: {this.props.theme}
+    		</span>
 
     		<Timer /> {/* I imported Timer from my own module */}
 
