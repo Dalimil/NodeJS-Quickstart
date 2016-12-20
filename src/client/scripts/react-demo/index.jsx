@@ -32,6 +32,14 @@ class App extends React.Component {
     			// (using index is often NOT a good choice)
     			<SimpleComponent message={m} key={index} />
     		)}
+
+        {/* Controlled inputs (with onChange and state.value) - see: 
+            https://facebook.github.io/react/docs/forms.html */}
+        {/* Uncontrolled inputs - see this:
+            Later access this HTML object ref. using this.textInput */}
+        <input type="text" defaultValue="Uncontrolled component"
+          ref={(input) => { this.textInput = input; }} />
+
     	</div>
     );
   }
