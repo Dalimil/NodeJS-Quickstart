@@ -63,6 +63,8 @@ yarn upgrade               # Update all dependencies
 
 ## TODO
 
+- Webpack CSS bundling and imports
+
 - Eslint demo
 
 https://github.com/verekia/js-stack-from-scratch/tree/master/tutorial/6-eslint
