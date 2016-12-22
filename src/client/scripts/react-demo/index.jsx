@@ -2,58 +2,73 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Timer from './Timer'
 
-// Single element
-const element = <h1>Hello, world</h1>;
-console.log(element, typeof element); // object
+// Import routing components
+import { Router, Route, Link, IndexRoute, browserHistory, hashHistory } from 'react-router';
 
-// Stateless Functional Component
-const SimpleComponent = props => (
+/* Wrapper to avoid activeClassName repetition */
+const NavLink = (props) => (
+  <Link {...props} activeClassName="active" onlyActiveOnIndex={true} />
+);
+
+const Nav = (props) => (
   <div>
-    The app says: {props.message}
+    Navigation:&nbsp;
+    <NavLink to='/'>Home</NavLink>&nbsp;
+    <NavLink to='/about'>About</NavLink>&nbsp;
+    <NavLink to='/inbox'>Inbox</NavLink>&nbsp;
+    <NavLink to='/inbox/message/Alice/msg-34'>Inbox-Message</NavLink>&nbsp;
   </div>
 );
 
-// Full Component 
-class App extends React.Component {
+const AppLayout = (props) => (
+  <div>
+    <Nav />
+    {props.children} {/* This will be one Route at a time */}
+  </div>
+);
 
+const Home = () => <div>--Home Component--</div>;
+const About = () => <div>-About Component-</div>;
+const NotFound = () => <h1>404.. This page is not found!</h1>;
+
+const Inbox = (props) => (
+  <div>
+    <h2>Inbox</h2>
+    {props.children}
+  </div>
+);
+const InboxHome = () => <div>Inbox Home</div>
+const Message = (props) => <div>Msg for {props.params.user}: {props.params.msgId}</div>;
+
+
+class App extends React.Component {
   render() {
     return (
-    	<div className="app-div-class">
-    		<span style={{color: 'red', fontWeight: 'bold'}}>
-    			Theme: {this.props.theme}
-    		</span>
-
-    		<Timer /> {/* I imported Timer from my own module */}
-
-    		{this.props.messages.map((m, index) =>
-    			// 'key' helps React optimize redrawing of changing list elements
-    			// (using index is often NOT a good choice)
-    			<SimpleComponent message={m} key={index} />
-    		)}
-
-        {/* Controlled inputs (with onChange and state.value) - see: 
-            https://facebook.github.io/react/docs/forms.html */}
-        {/* Uncontrolled inputs - see this:
-            Later access this HTML object ref. using this.textInput */}
-        <input type="text" defaultValue="Uncontrolled component"
-          ref={(input) => { this.textInput = input; }} />
-
-    	</div>
+      <Router history={hashHistory} >
+        <Route path="/" component={AppLayout}>
+          <IndexRoute component={Home} />
+          <Route path="about" component={About} />
+          <Route path="inbox" component={Inbox}> {/* Wrapper */}
+            <IndexRoute component={InboxHome} />
+            <Route path="message/:user/:msgId" component={Message} />
+            {/* path could also be just ':id' */}
+          </Route>
+          <Route path='*' component={NotFound} />
+        </Route>
+      </Router>
     );
   }
 }
 
-
 // Wait for DOM loaded
 $(() => {
 
-	const appMessages = ["Hello World!", "Welcome", "3rd message"];
-	ReactDOM.render(
-	  <App theme="blue" messages={appMessages} />,
-	  document.getElementById("my-react-root")
-	);
+  ReactDOM.render(
+    <App />,
+    document.getElementById("my-react-root")
+  );
 
-	console.log('React-demo module is now loaded...');
+  console.log('React-demo module is now loaded...');
 });
+
