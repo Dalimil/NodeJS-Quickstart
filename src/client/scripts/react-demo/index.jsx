@@ -29,15 +29,10 @@ const AppLayout = (props) => (
 );
 
 const Home = () => <div>--Home Component--</div>;
-const About = () => <div>-About Component-</div>;
+const About = () => <div>--About Component--</div>;
 const NotFound = () => <h1>404.. This page is not found!</h1>;
 
-const Inbox = (props) => (
-  <div>
-    <h2>Inbox</h2>
-    {props.children}
-  </div>
-);
+const Inbox = (props) => (<div><h2>Inbox</h2> {props.children} </div>);
 const InboxHome = () => <div>Inbox Home</div>
 const Message = (props) => <div>Msg for {props.params.user}: {props.params.msgId}</div>;
 
@@ -49,10 +44,13 @@ class App extends React.Component {
         <Route path="/" component={AppLayout}>
           <IndexRoute component={Home} />
           <Route path="about" component={About} />
-          <Route path="inbox" component={Inbox}> {/* Wrapper */}
+          <Route path="inbox" component={Inbox}>
+            {/* Wrapper could omit the path if it just extends the UI
+              * - in that case IndexRoute would not exist */}
             <IndexRoute component={InboxHome} />
             <Route path="message/:user/:msgId" component={Message} />
             {/* path could also be just ':id' */}
+            {/* use onEnter={myCheckLoggedInFunction} for authorization */}
           </Route>
           <Route path='*' component={NotFound} />
         </Route>
