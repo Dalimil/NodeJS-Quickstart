@@ -44,8 +44,10 @@
     "babel-preset-latest": "^6.16.0",
     "babel-preset-react": "^6.16.0",
     "concurrently": "^3.1.0",
+    "css-loader": "^0.26.1",
     "localtunnel": "^1.8.2",
     "nodemon": "^1.9.2",
+    "style-loader": "^0.13.1",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   }

@@ -3,6 +3,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './tutorial.css'; // styles will be inlined globally
+
 // Import routing components
 import { Router, Route, Link, IndexRoute, browserHistory, hashHistory } from 'react-router';
 
