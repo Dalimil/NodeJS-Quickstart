@@ -47,7 +47,7 @@ let scheduledAlert = scheduler.schedule(30000, () => {
 	let currentTime = new Date().toLocaleTimeString();
 	console.log("~ " + currentTime); 
 });
-// scheduledAlert.cancel();
+scheduledAlert.cancel();
 
 /** Route handlers */
 const userController = require('./controllers/users');
@@ -89,9 +89,9 @@ app.get('/login/facebook/callback', auth.loginFacebookReturn, function(req, res)
 });
 
 app.get('/user/:name', function(req, res) { /* Path can also be a regexp */
-   console.log("Got a GET request with a pattern match");
-   console.log(req.requestInfo);
-   res.send('Hello <strong>GET</strong>');
+	console.log("Got a GET request with a pattern match");
+	console.log(req.requestInfo);
+	res.send('Hello <strong>GET</strong>');
 });
 
 app.post('/file_upload', upload.single('avatar'), function(req, res) {

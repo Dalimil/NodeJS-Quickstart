@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 "use strict";
 
 // Iterface functions for our Mongoose MongoDB model
@@ -24,7 +26,7 @@ function addUser(user) {
 		if (err) throw err;
 		console.log('User saved successfully!');
 	});
-};
+}
 
 // FIND - find(), findOne(), findById()
 function getAllUsers(callback) {
@@ -33,7 +35,7 @@ function getAllUsers(callback) {
 		
 		callback(users); // all the users
 	});
-};
+}
 
 function getUser(name) {
 	// get the user 'alice'
@@ -42,7 +44,7 @@ function getUser(name) {
 
 		console.log(user); // user object
 	});
-};
+}
 
 // DELETE - remove() or findOneAndRemove()
 function removeUser(name) {
@@ -51,7 +53,7 @@ function removeUser(name) {
 
 		console.log('user removed');
 	});
-};
+}
 
 // UPDATE = FIND + SAVE
 function updateUser() {

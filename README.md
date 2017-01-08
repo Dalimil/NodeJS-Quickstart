@@ -63,16 +63,6 @@ yarn upgrade               # Update all dependencies
 
 ## TODO
 
-- Eslint demo
-
-https://github.com/verekia/js-stack-from-scratch/tree/master/tutorial/6-eslint
-
-- Redux demo
-
-https://github.com/verekia/js-stack-from-scratch/tree/master/tutorial/9-redux
-
-https://github.com/verekia/js-stack-from-scratch/tree/master/tutorial/10-immutable-redux-improvements
-
 - Tests demo (Mocha)
 
 https://github.com/verekia/js-stack-from-scratch/tree/master/tutorial/11-testing-mocha-chai-sinon

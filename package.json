@@ -12,7 +12,8 @@
     "webpack-dev-iframe": "webpack-dev-server --port 8081 --content-base http://localhost:8080",
     "webpack-dev-inline": "webpack-dev-server --port 8081 --inline",
     "all": "concurrently --kill-others \"yarn run webpack-dev-inline\" \"yarn run start\"",
-    "deploy": "lt --port 8080 -s nodejsapp -o"
+    "deploy": "lt --port 8080 -s nodejsapp -o",
+    "lint": "eslint src"
   },
   "author": "Dalimil Hajek",
   "dependencies": {
@@ -45,6 +46,8 @@
     "babel-preset-react": "^6.16.0",
     "concurrently": "^3.1.0",
     "css-loader": "^0.26.1",
+    "eslint": "^3.13.0",
+    "eslint-plugin-react": "^6.8.0",
     "localtunnel": "^1.8.2",
     "nodemon": "^1.9.2",
     "style-loader": "^0.13.1",

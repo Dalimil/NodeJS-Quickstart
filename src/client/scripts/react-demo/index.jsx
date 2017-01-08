@@ -10,24 +10,24 @@ import { Router, Route, Link, IndexRoute, browserHistory, hashHistory } from 're
 
 /* Wrapper to avoid activeClassName repetition */
 const NavLink = (props) => (
-  <Link {...props} activeClassName="active" onlyActiveOnIndex={true} />
+	<Link {...props} activeClassName="active" onlyActiveOnIndex={true} />
 );
 
 const Nav = (props) => (
-  <div>
-    Navigation:&nbsp;
-    <NavLink to='/'>Home</NavLink>&nbsp;
-    <NavLink to='/about'>About</NavLink>&nbsp;
-    <NavLink to='/inbox'>Inbox</NavLink>&nbsp;
-    <NavLink to='/inbox/message/Alice/msg-34'>Inbox-Message</NavLink>&nbsp;
-  </div>
+	<div>
+		Navigation:&nbsp;
+		<NavLink to='/'>Home</NavLink>&nbsp;
+		<NavLink to='/about'>About</NavLink>&nbsp;
+		<NavLink to='/inbox'>Inbox</NavLink>&nbsp;
+		<NavLink to='/inbox/message/Alice/msg-34'>Inbox-Message</NavLink>&nbsp;
+	</div>
 );
 
 const AppLayout = (props) => (
-  <div>
-    <Nav />
-    {props.children} {/* This will be one Route at a time */}
-  </div>
+	<div>
+		<Nav />
+		{props.children} {/* This will be one Route at a time */}
+	</div>
 );
 
 const Home = () => <div>--Home Component--</div>;
@@ -40,35 +40,35 @@ const Message = (props) => <div>Msg for {props.params.user}: {props.params.msgId
 
 
 class App extends React.Component {
-  render() {
-    return (
-      <Router history={hashHistory} >
-        <Route path="/" component={AppLayout}>
-          <IndexRoute component={Home} />
-          <Route path="about" component={About} />
-          <Route path="inbox" component={Inbox}>
-            {/* Wrapper could omit the path if it just extends the UI
-              * - in that case IndexRoute would not exist */}
-            <IndexRoute component={InboxHome} />
-            <Route path="message/:user/:msgId" component={Message} />
-            {/* path could also be just ':id' */}
-            {/* use onEnter={myCheckLoggedInFunction} for authorization */}
-          </Route>
-          <Route path='*' component={NotFound} />
-        </Route>
-      </Router>
-    );
-  }
+	render() {
+		return (
+			<Router history={hashHistory} >
+				<Route path="/" component={AppLayout}>
+					<IndexRoute component={Home} />
+					<Route path="about" component={About} />
+					<Route path="inbox" component={Inbox}>
+						{/* Wrapper could omit the path if it just extends the UI
+							* - in that case IndexRoute would not exist */}
+						<IndexRoute component={InboxHome} />
+						<Route path="message/:user/:msgId" component={Message} />
+						{/* path could also be just ':id' */}
+						{/* use onEnter={myCheckLoggedInFunction} for authorization */}
+					</Route>
+					<Route path='*' component={NotFound} />
+				</Route>
+			</Router>
+		);
+	}
 }
 
 // Wait for DOM loaded
 $(() => {
 
-  ReactDOM.render(
-    <App />,
-    document.getElementById("my-react-root")
-  );
+	ReactDOM.render(
+		<App />,
+		document.getElementById("my-react-root")
+	);
 
-  console.log('React-demo module is now loaded...');
+	console.log('React-demo module is now loaded...');
 });
 

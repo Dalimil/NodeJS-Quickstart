@@ -5,13 +5,13 @@ const evenNums = Array(10).fill(0).map((v, i) => i * 2);
 console.log("Hi, I am a client-side JS module print.js");
 
 class Dog {
-  constructor(name) {
-    this.name = name;
-  }
+	constructor(name) {
+		this.name = name;
+	}
 
-  bark() {
-    return `Wah wah, I am ${this.name}`;
-  }
+	bark() {
+		return `Wah wah, I am ${this.name}`;
+	}
 }
 
 export {

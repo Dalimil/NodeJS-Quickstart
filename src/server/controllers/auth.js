@@ -4,6 +4,7 @@ const passport = require('passport');
 const FacebookStrategy = require('passport-facebook').Strategy;
 const TwitterStrategy  = require('passport-twitter').Strategy;
 const config = require('../config');
+const User = require('../models/User');
 
 exports.init = (app) => {
 	app.use(passport.initialize());
@@ -19,7 +20,8 @@ exports.loginFacebookReturn = passport.authenticate('facebook', { failureRedirec
 // credential (`accessToken`) for accessing the Facebook API on the user's
 // behalf, along with the user's profile.  The function must invoke `cb` with
 // a user object, which will be set at `req.user` in route handlers after authentication.
-passport.use(new FacebookStrategy({
+passport.use(new FacebookStrategy(
+	{
 		clientID: config.FACEBOOK_AUTH.ID,
 		clientSecret: config.FACEBOOK_AUTH.SECRET,
 		callbackURL: "/auth/facebook/callback",
@@ -45,7 +47,8 @@ passport.use(new FacebookStrategy({
 // user's behalf, along with the user's profile.  The function must invoke `cb`
 // with a user object, which will be set at `req.user` in route handlers after
 // authentication.
-passport.use(new TwitterStrategy({
+passport.use(new TwitterStrategy(
+	{
 		consumerKey: config.TWITTER_AUTH.KEY,
 		consumerSecret: config.TWITTER_AUTH.SECRET,
 		callbackURL: "/auth/twitter/callback"

@@ -10,7 +10,8 @@ request('http://example.com', function(error, response, body) {
 });
 
 /* POST */
-request.post({
+request.post(
+	{
 		url: 'http://example.com/upload',
 		form: {
 			key: 'value',
