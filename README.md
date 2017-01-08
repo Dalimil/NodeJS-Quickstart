@@ -61,12 +61,6 @@ yarn upgrade [package]     # Update dependency
 yarn upgrade               # Update all dependencies
 ```
 
-## TODO
-
-- Tests demo (Mocha)
-
-https://github.com/verekia/js-stack-from-scratch/tree/master/tutorial/11-testing-mocha-chai-sinon
-
 ## Screenshots
 
 ![01](https://github.com/Dalimil/NodeJS-Quickstart/blob/master/docs/screenshots/demo.png)
