@@ -14,12 +14,12 @@ html
 		// Or with React: https://react-bootstrap.github.io/getting-started.html
 		script(src='/js/bootstrap.min.js')
 		
-		- var productionMode = false
-		if productionMode
-			script(src='/build/bundle.js')
-		else
+		- var hotReloadingMode = false
+		if hotReloadingMode
 			// bundle from webpack-dev-server (hot reloading using web-sockets + iframe)
 			script(src='http://localhost:8081/bundle.js')
+		else
+			script(src='/build/bundle.js')
 				
 
 		block scripts
