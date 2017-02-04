@@ -13,7 +13,8 @@
     "build:dev:hot": "yarn run webpack-dev-inline",
     "webpack-dev-inline": "webpack-dev-server --port 8081 --inline",
     "webpack-dev-iframe": "webpack-dev-server --port 8081 --content-base http://localhost:8080 && echo http://localhost:8081/webpack-dev-server/",
-    "deploy": "lt --port 8080 -s nodejsapp",
+    "deploy": "ngrok http 8080",
+    "deploy-alt": "lt --port 8080 -s nodejsapp",
     "test": "mocha src/test"
   },
   "author": "Dalimil Hajek",
@@ -29,6 +30,7 @@
     "mongoose": "^4.4.19",
     "morgan": "^1.7.0",
     "multer": "^1.1.0",
+    "ngrok": "^2.2.6",
     "npm-run-all": "^4.0.1",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
