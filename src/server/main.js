@@ -40,15 +40,6 @@ app.use(session({
 	store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
-/** Set up periodic tasks */
-const scheduler = require('./utils/scheduler');
-// use scheduleOnce() or schedule() for one-off or repeated tasks respectively
-let scheduledAlert = scheduler.schedule(30000, () => {
-	let currentTime = new Date().toLocaleTimeString();
-	console.log("~ " + currentTime); 
-});
-scheduledAlert.cancel();
-
 /** Route handlers */
 const userController = require('./controllers/users');
 const sockets = require('./controllers/sockets');
