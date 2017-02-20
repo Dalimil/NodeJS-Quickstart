@@ -1,6 +1,15 @@
-// Firebase Real-time database
-const firebase = require("./firebase");
-const database = firebase.database();
+"use strict";
+
+const firebase = require("firebase");
+
+// Initialize Firebase
+const config = {
+	apiKey: "AIzaSyDKe7rZIlN9CbvzH6Uvoo_BHavNdvLa_jg",
+	authDomain: "hackathon-quickstart-4f3dd.firebaseapp.com",
+	databaseURL: "https://hackathon-quickstart-4f3dd.firebaseio.com",
+	storageBucket: "hackathon-quickstart-4f3dd.appspot.com"
+};
+firebase.initializeApp(config);
 
 // Crypto/Hashing demo - useful for database-value hashing
 const crypto = require('crypto');
@@ -9,6 +18,8 @@ const hash = (text) => {
 	return crypto.createHmac('sha256', HASH_SECRET).update(text).digest('hex');
 };
 
+// ----------------- Firebase Real-time database ---------------------
+const database = firebase.database();
 // Get DB location reference
 var myref = firebase.database().ref('public/postid-34/starCount');
 // To ask for sorted feed:

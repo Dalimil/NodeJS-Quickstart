@@ -10,6 +10,3 @@ const result = evens.reduce((accum, val) => {
 }, ">");
 
 console.log("Main module loaded.", result);
-
-// Debug
-import './firebase';
