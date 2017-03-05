@@ -15,7 +15,7 @@
     "webpack-dev-iframe": "webpack-dev-server --port 8081 --content-base http://localhost:8080 && echo http://localhost:8081/webpack-dev-server/",
     "deploy": "ngrok http 8080",
     "deploy-alt": "lt --port 8080 -s nodejsapp",
-    "test": "mocha src/test"
+    "test": "casperjs src/test/*"
   },
   "author": "Dalimil Hajek",
   "dependencies": {
@@ -37,8 +37,8 @@
     "babel-cli": "^6.18.0",
     "babel-loader": "^6.2.8",
     "babel-preset-latest": "^6.16.0",
+    "casperjs": "^1.1.3",
     "localtunnel": "^1.8.2",
-    "mocha": "^3.2.0",
     "ngrok": "^2.2.6",
     "nodemon": "^1.9.2",
     "webpack": "^1.14.0",
