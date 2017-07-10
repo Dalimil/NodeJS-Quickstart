@@ -28,3 +28,7 @@ yarn upgrade               # Update all dependencies
 
 ![01](https://github.com/Dalimil/NodeJS-Quickstart/blob/master/docs/screenshots/demo.png)
 <!-- Or with img tags like this: https://github.com/Dalimil/Future-Health-Hackathon/blob/master/README.md -->
+
+
+## TODO
+- Consider https://github.com/bitinn/node-fetch instead of node request
